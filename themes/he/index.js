@@ -97,7 +97,7 @@ const LayoutBase = props => {
   return (
     <ThemeGlobalHexo.Provider value={{ searchModal }}>
       <div
-        id='theme-hexo'
+        id='theme-he'
         className={`${siteConfig('FONT_STYLE')} dark:bg-black scroll-smooth`}>
         <Style />
 
