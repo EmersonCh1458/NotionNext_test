@@ -1,6 +1,7 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "installCommand": "npm install --legacy-peer-deps",
   "headers": [],
   "git": {
     "deploymentEnabled": {
