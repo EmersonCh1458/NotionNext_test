@@ -67,8 +67,8 @@ const BlogListScroll = ({ posts = [], currentSearch }) => {
                 </SmartLink>
                 {siteConfig('HE_SHOW_CATEGORY_CHIP', true) && post?.category && (
                   <div className='mt-1.5 flex flex-wrap gap-1.5'>
-                    {post.category?.map(cat => (
-                      <span key={cat} className='he-chip'>{cat}</span>
+                    {post.category?.split(',').map(cat => (
+                      <span key={cat.trim()} className='he-chip'>{cat.trim()}</span>
                     ))}
                   </div>
                 )}

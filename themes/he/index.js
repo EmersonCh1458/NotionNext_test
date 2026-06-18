@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import { createContext, useContext, useEffect } from 'react'
 
 import ArticleAround from './components/ArticleAround'
-import { ArticleLock } from './components/ArticleLock'
+import ArticleLock from './components/ArticleLock'
 import ArticleInfo from './components/ArticleInfo'
 import ArticleRecommend from './components/RecommendPosts'
 import BlogArchiveItem from './components/BlogArchiveItem'

@@ -1,7 +1,6 @@
 import { siteConfig } from '@/lib/config'
 import { useGlobal } from '@/lib/global'
 import { useRouter } from 'next/router'
-import { useHexoGlobal } from '..'
 
 /**
  * 搜索按钮
