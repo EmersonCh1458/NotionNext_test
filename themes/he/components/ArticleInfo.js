@@ -37,14 +37,14 @@ const ArticleInfo = ({ post, siteInfo }) => {
           </time>
         )}
         {/* 分类 */}
-        {siteConfig('HE_SHOW_CATEGORY_CHIP', true) && post?.category && post.category.length > 0 && (
+        {siteConfig('HE_SHOW_CATEGORY_CHIP', true) && post?.category && typeof post.category === 'string' && (
           <div className='flex flex-wrap gap-1.5'>
-            {post.category.map(cat => (
+            {post.category.split(',').map(cat => (
               <SmartLink
-                key={cat}
-                href={`/category/${encodeURIComponent(cat)}`}
+                key={cat.trim()}
+                href={`/category/${encodeURIComponent(cat.trim())}`}
                 className='he-chip'>
-                {cat}
+                {cat.trim()}
               </SmartLink>
             ))}
           </div>
