@@ -4,6 +4,10 @@ import SmartLink from '@/components/SmartLink'
 import CONFIG from '../config'
 import { BlogPostCardInfo } from './BlogPostCardInfo'
 
+/**
+ * 文章卡片 — 左侧封面图 + 右侧文字
+ * 动效：scroll reveal staggered + hover 视差
+ */
 const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
   const showPreview =
     siteConfig('HEXO_POST_LIST_PREVIEW', null, CONFIG) && post.blockMap
@@ -18,21 +22,24 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
     siteConfig('HEXO_POST_LIST_COVER', null, CONFIG) &&
     post?.pageCoverThumbnail &&
     !showPreview
-  //   const delay = (index % 2) * 200
+
+  // 交替延迟让 staggered 更自然
+  const aosDelay = 50 + (index % 3) * 80
 
   return (
-    <div
-      className={`${siteConfig('HEXO_POST_LIST_COVER_HOVER_ENLARGE', null, CONFIG) ? ' hover:scale-110 transition-all duration-150' : ''}`}>
+    <div>
       <div
         key={post.id}
         data-aos='fade-up'
-        data-aos-easing='ease-in-out'
-        data-aos-duration='500'
-        data-aos-once='false'
+        data-aos-delay={aosDelay}
+        data-aos-duration='600'
+        data-aos-once='true'
         data-aos-anchor-placement='top-bottom'
+        data-aos-easing='ease-out-quart'
         id='blog-post-card'
-        className={`group md:h-56 w-full flex justify-between md:flex-row flex-col-reverse ${siteConfig('HEXO_POST_LIST_IMG_CROSSOVER', null, CONFIG) && index % 2 === 1 ? 'md:flex-row-reverse' : ''}
-                    overflow-hidden border dark:border-black rounded-xl bg-white dark:bg-hexo-black-gray`}>
+        className={`blog-post-card group w-full flex justify-between md:flex-row flex-col-reverse ${
+          siteConfig('HEXO_POST_LIST_IMG_CROSSOVER', null, CONFIG) && index % 2 === 1 ? 'md:flex-row-reverse' : ''
+        } overflow-hidden border border-[var(--border-light)] rounded-xl bg-[var(--bg-card)]`}>
         {/* 文字内容 */}
         <BlogPostCardInfo
           index={index}
@@ -51,7 +58,8 @@ const BlogPostCard = ({ index, post, showSummary, siteInfo }) => {
                   priority={index === 1}
                   alt={post?.title}
                   src={post?.pageCoverThumbnail}
-                  className='h-56 w-full object-cover object-center group-hover:scale-110 duration-500'
+                  className='h-full w-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105'
+                  style={{ minHeight: '200px' }}
                 />
               </>
             </SmartLink>
