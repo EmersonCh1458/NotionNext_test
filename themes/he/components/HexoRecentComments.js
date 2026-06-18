@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { siteConfig } from '@/lib/config'
-import Card from '@/themes/hexo/components/Card'
+import Card from '@/themes/he/components/Card'
 import { useGlobal } from '@/lib/global'
 import SmartLink from '@/components/SmartLink'
 import { RecentComments } from '@waline/client'
