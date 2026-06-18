@@ -28,8 +28,8 @@ const Header = props => {
   const { locale } = useGlobal()
   const router = useRouter()
   const [isOpen, changeShow] = useState(false)
-  const showSearchButton = siteConfig('HEXO_MENU_SEARCH', false, CONFIG)
-  const showRandomButton = siteConfig('HEXO_MENU_RANDOM', false, CONFIG)
+  const showSearchButton = false
+  const showRandomButton = false
 
   const toggleMenuOpen = () => {
     changeShow(!isOpen)

@@ -1,103 +1,86 @@
 import { useRouter } from 'next/router'
 import { useImperativeHandle, useRef, useState } from 'react'
 import { useGlobal } from '@/lib/global'
+
 let lock = false
 
-const SearchInput = props => {
-  const { currentSearch, cRef, className } = props
+/**
+ * He 搜索输入框
+ * 简洁、无图标库依赖
+ */
+const SearchInput = ({ currentSearch, cRef, className }) => {
   const [onLoading, setLoadingState] = useState(false)
   const router = useRouter()
   const searchInputRef = useRef()
   const { locale } = useGlobal()
-  useImperativeHandle(cRef, () => {
-    return {
-      focus: () => {
-        searchInputRef?.current?.focus()
-      }
-    }
-  })
+
+  useImperativeHandle(cRef, () => ({
+    focus: () => searchInputRef?.current?.focus()
+  }))
 
   const handleSearch = () => {
-    const key = searchInputRef.current.value
-    if (key && key !== '') {
+    const key = searchInputRef.current?.value?.trim()
+    if (key) {
       setLoadingState(true)
-      router.push({ pathname: '/search/' + key }).then(r => {
-        setLoadingState(false)
-      })
-      // location.href = '/search/' + key
-    } else {
-      router.push({ pathname: '/' }).then(r => {})
+      router.push({ pathname: '/search/' + key }).then(() => setLoadingState(false))
     }
   }
+
   const handleKeyUp = e => {
-    if (e.keyCode === 13) {
-      // 回车
-      handleSearch(searchInputRef.current.value)
-    } else if (e.keyCode === 27) {
-      // ESC
-      cleanSearch()
-    }
+    if (e.keyCode === 13) handleSearch()
+    else if (e.keyCode === 27) cleanSearch()
   }
+
   const cleanSearch = () => {
-    searchInputRef.current.value = ''
+    if (searchInputRef.current) searchInputRef.current.value = ''
   }
 
   const [showClean, setShowClean] = useState(false)
   const updateSearchKey = val => {
-    if (lock) {
-      return
-    }
-    searchInputRef.current.value = val
-
-    if (val) {
-      setShowClean(true)
-    } else {
-      setShowClean(false)
-    }
-  }
-  function lockSearchInput () {
-    lock = true
+    if (lock) return
+    if (searchInputRef.current) searchInputRef.current.value = val
+    setShowClean(!!val)
   }
 
-  function unLockSearchInput () {
-    lock = false
-  }
+  const lockSearchInput = () => { lock = true }
+  const unLockSearchInput = () => { lock = false }
 
   return (
-    <div className={'flex w-full rounded-lg ' + className}>
+    <div className={'flex w-full rounded-lg ' + (className || '')}>
       <input
         ref={searchInputRef}
-        type="text"
-        className={
-          'outline-none w-full text-sm pl-5 rounded-lg transition focus:shadow-lg dark:text-gray-300 font-light leading-10 text-black bg-gray-100 dark:bg-gray-500'
-        }
+        type='text'
+        className='outline-none w-full text-sm pl-4 pr-10 py-2 rounded-lg border border-[var(--he-border)] bg-[var(--he-bg)] text-[var(--he-text)] placeholder-[var(--he-text-dim)] focus:border-[var(--he-theme)] transition-colors'
         onKeyUp={handleKeyUp}
         onCompositionStart={lockSearchInput}
         onCompositionUpdate={lockSearchInput}
         onCompositionEnd={unLockSearchInput}
-        placeholder={locale.SEARCH.ARTICLES}
+        placeholder={locale.SEARCH?.ARTICLES || '搜索文章...'}
         onChange={e => updateSearchKey(e.target.value)}
         defaultValue={currentSearch || ''}
       />
-
-      <div
-        className="-ml-8 cursor-pointer  float-right items-center justify-center py-2"
+      <button
         onClick={handleSearch}
-      >
-        <i
-          className={`hover:text-black transform duration-200 text-gray-500 dark:text-gray-200 cursor-pointer fas ${
-            onLoading ? 'fa-spinner animate-spin' : 'fa-search'
-          }`}
-        />
-      </div>
-
+        className='-ml-9 flex items-center justify-center text-[var(--he-text-dim)] hover:text-[var(--he-theme)] transition-colors'
+        aria-label='搜索'>
+        {onLoading ? (
+          <span className='inline-block w-4 h-4 border-2 border-[var(--he-theme)] border-t-transparent rounded-full animate-spin' />
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="6.5" cy="6.5" r="4.5" />
+            <path d="M10.5 10.5 L14 14" />
+          </svg>
+        )}
+      </button>
       {showClean && (
-        <div className="-ml-12 cursor-pointer float-right items-center justify-center py-2">
-          <i
-            className="hover:text-black transform duration-200 text-gray-400 dark:text-gray-300 cursor-pointer fas fa-times"
-            onClick={cleanSearch}
-          />
-        </div>
+        <button
+          onClick={cleanSearch}
+          className='-ml-7 flex items-center justify-center text-[var(--he-text-dim)] hover:text-[var(--he-text)] transition-colors'
+          aria-label='清除'>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <path d="M3 3 L11 11 M11 3 L3 11" />
+          </svg>
+        </button>
       )}
     </div>
   )

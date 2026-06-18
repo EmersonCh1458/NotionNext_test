@@ -2,50 +2,52 @@ import { useGlobal } from '@/lib/global'
 import { useEffect, useRef } from 'react'
 
 /**
- * 加密文章校验组件
- * @param {password, validPassword} props
- * @param password 正确的密码
- * @param validPassword(bool) 回调函数，校验正确回调入参为true
- * @returns
+ * He 文章密码锁
  */
-export const ArticleLock = props => {
-  const { validPassword } = props
+const ArticleLock = ({ validPassword }) => {
   const { locale } = useGlobal()
+  const passwordInputRef = useRef(null)
+
   const submitPassword = () => {
     const p = document.getElementById('password')
-    if (!validPassword(p?.value)) {
+    const val = p?.value
+    if (!validPassword?.(val)) {
       const tips = document.getElementById('tips')
       if (tips) {
-        tips.innerHTML = ''
-        tips.innerHTML = `<div class='text-red-500 animate__shakeX animate__animated'>${locale.COMMON.PASSWORD_ERROR}</div>`
+        tips.innerHTML = `<div class='text-red-500 text-sm mt-2'>${locale.COMMON?.PASSWORD_ERROR || '密码错误'}</div>`
       }
     }
   }
-  const passwordInputRef = useRef(null)
+
   useEffect(() => {
-    // 选中密码输入框并将其聚焦
-    passwordInputRef.current.focus()
+    passwordInputRef.current?.focus()
   }, [])
 
-  return <div id='container' className='w-full flex justify-center items-center h-96 '>
-    <div className='text-center space-y-3'>
-      <div className='font-bold dark:text-gray-300 text-black'>{locale.COMMON.ARTICLE_LOCK_TIPS}</div>
-      <div className='flex mx-4'>
-        <input id="password" type='password'
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                submitPassword()
-              }
-            }}
-            ref={passwordInputRef} // 绑定ref到passwordInputRef变量
-            className='outline-none w-full text-sm pl-5 rounded-l transition focus:shadow-lg  font-light leading-10 bg-gray-100 dark:bg-gray-500'>
-        </input>
-        <div onClick={submitPassword} className="px-3 whitespace-nowrap cursor-pointer items-center justify-center py-2 bg-indigo-500 hover:bg-indigo-400 text-white rounded-r duration-300" >
-          <i className={'duration-200 cursor-pointer fas fa-key'} >&nbsp;{locale.COMMON.SUBMIT}</i>
+  return (
+    <div className='w-full flex justify-center items-center min-h-[24rem]'>
+      <div className='text-center space-y-4'>
+        <div className='font-serif text-lg text-[var(--he-text)]'>
+          {locale.COMMON?.ARTICLE_LOCK_TIPS || '此文章已加密，请输入密码'}
         </div>
-      </div>
-      <div id='tips'>
+        <div className='flex justify-center'>
+          <input
+            id='password'
+            type='password'
+            onKeyDown={e => { if (e.key === 'Enter') submitPassword() }}
+            ref={passwordInputRef}
+            className='outline-none w-56 text-sm px-4 py-2 rounded-l border border-[var(--he-border)] bg-[var(--he-bg)] text-[var(--he-text)] focus:border-[var(--he-theme)] transition-colors'
+            placeholder='输入密码'
+          />
+          <button
+            onClick={submitPassword}
+            className='px-4 py-2 bg-[var(--he-theme)] text-white text-sm rounded-r hover:opacity-90 transition-opacity'>
+            {locale.COMMON?.SUBMIT || '确认'}
+          </button>
+        </div>
+        <div id='tips' />
       </div>
     </div>
-  </div>
+  )
 }
+
+export default ArticleLock

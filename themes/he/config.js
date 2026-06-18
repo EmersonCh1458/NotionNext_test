@@ -1,50 +1,48 @@
+/**
+ * He 主题 — 禾的资讯站
+ * 信息流风格，暖白纸质感，衬线字体，自然呼吸感
+ */
+
 const CONFIG = {
-  HEXO_HOME_BANNER_ENABLE: true,
-  // 3.14.1以后的版本中，欢迎语在blog.config.js中配置，用英文逗号','隔开多个。
-  HEXO_HOME_BANNER_GREETINGS: [
-    'Hi，我是一个程序员',
-    'Hi，我是一个打工人',
-    'Hi，我是一个干饭人',
-    '欢迎来到我的博客🎉'
-  ], // 首页大图标语文字
+  // --- 布局 ---
+  HE_TITLE_SIZE: 'text-3xl md:text-5xl',
+  HE_HERO_HEIGHT: 'h-[60vh] md:h-[70vh]',
+  HE_SIDEBAR_VISIBLE: true,
+  HE_SIDEBAR_WIDTH: 'w-72 lg:w-80',
 
-  HEXO_HOME_NAV_BUTTONS: true, // 首页是否显示分类大图标按钮
-  // 已知未修复bug, 在移动端开启true后会加载不出图片； 暂时建议设置为false。
-  HEXO_HOME_NAV_BACKGROUND_IMG_FIXED: false, // 首页背景图滚动时是否固定，true 则滚动时图片不懂动； false则随鼠标滚动 ;
-  // 是否显示开始阅读按钮
-  HEXO_SHOW_START_READING: true,
+  // --- 显示控制 ---
+  HE_SHOW_CATEGORY_CHIP: true,
+  HE_SHOW_TAG_CHIP: true,
+  HE_SHOW_DATE: true,
+  HE_SHOW_READING_TIME: false,
 
-  // 菜单配置
-  HEXO_MENU_INDEX: true, // 显示首页
-  HEXO_MENU_CATEGORY: true, // 显示分类
-  HEXO_MENU_TAG: true, // 显示标签
-  HEXO_MENU_ARCHIVE: true, // 显示归档
-  HEXO_MENU_SEARCH: true, // 显示搜索
-  HEXO_MENU_RANDOM: true, // 显示随机跳转按钮
+  HE_HERO_SHOW_COVER: true,
+  HE_HERO_SHOW_GREETING: true,
+  HE_HERO_SHOW_SCROLL_HINT: true,
 
-  HEXO_POST_LIST_COVER: true, // 列表显示文章封面
-  HEXO_POST_LIST_COVER_HOVER_ENLARGE: false, // 列表鼠标悬停放大
+  HE_FOOTER_SHOW_SINCE: true,
+  HE_FOOTER_SHOW_POWERED: false,
 
-  HEXO_POST_LIST_COVER_DEFAULT: true, // 封面为空时用站点背景做默认封面
-  HEXO_POST_LIST_SUMMARY: true, // 文章摘要
-  HEXO_POST_LIST_PREVIEW: false, // 读取文章预览
-  HEXO_POST_LIST_IMG_CROSSOVER: true, // 博客列表图片左右交错
+  // --- 组件开关 ---
+  HE_WIDGET_INFO_CARD: true,
+  HE_WIDGET_CATEGORIES: true,
+  HE_WIDGET_TAGS: true,
+  HE_WIDGET_LATEST_POSTS: true,
 
-  HEXO_ARTICLE_ADJACENT: true, // 显示上一篇下一篇文章推荐
-  HEXO_ARTICLE_COPYRIGHT: true, // 显示文章版权声明
-  HEXO_ARTICLE_NOT_BY_AI: false, // 显示非AI写作
-  HEXO_ARTICLE_RECOMMEND: true, // 文章关联推荐
+  // --- 样式 ---
+  HE_THEME_COLOR: '#6366f1',
+  HE_ACCENT_COLOR: '#8b5cf6',
+  HE_BG_BODY: '#f6f5f1',
+  HE_BG_CARD: '#ffffff',
+  HE_TEXT_PRIMARY: '#1a1a1a',
+  HE_TEXT_SECONDARY: '#5a5a5a',
+  HE_TEXT_MUTED: '#aaaaaa',
+  HE_BORDER_LIGHT: '#e8e6e1',
 
-  HEXO_WIDGET_LATEST_POSTS: true, // 显示最新文章卡
-  HEXO_WIDGET_ANALYTICS: false, // 显示统计卡
-  HEXO_WIDGET_TO_TOP: true,
-  HEXO_WIDGET_TO_COMMENT: true, // 跳到评论区
-  HEXO_WIDGET_DARK_MODE: true, // 夜间模式
-  HEXO_WIDGET_TOC: true, // 移动端悬浮目录
-
-  HEXO_THEME_COLOR: '#6366f1', // 主题色（柔和蓝紫）
-
-  /** 文章详情页客户端切换时，主栏显示卡片+转圈占位（无全屏遮罩；已有独立 LoadingCover 的主题无需此项） */
-  HEXO_ARTICLE_ROUTE_LOADING: true
+  // --- 文章 ---
+  HE_ARTICLE_ADJACENT: true,
+  HE_ARTICLE_RECOMMEND: true,
+  HE_ARTICLE_ROUTE_LOADING: false
 }
+
 export default CONFIG
